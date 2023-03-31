@@ -17,6 +17,14 @@ Para elaborar este proyecto requerimos de las siguientes tecnologías:
 ---
 
 ###  Instalación
+Primero clonamos el repositorio
+
+git clone https://github.com/jorge-stack/Parcial-2.git
+
+Se accede al repositorio que acabamos de clonar
+
+cd Parcial-2
+
 En nuestra instancia EC2 nos aseguramos de tener Docker installado
 	
 	sudo yum update -y  
@@ -40,6 +48,8 @@ Para correr el servicio corremos el siguiente comando
 Esto correrá nuestro contenedor trayendo la imagen del [Dockehub]([jsdiaz/parcialsc general | Docker Hub](https://hub.docker.com/repository/docker/jsdiaz/parcialsc/general)), expondra el puerto 5000 del contenedor en el puerto 5000 de la instancia. En mi caso queda el acceso en la siguiente url:
 
 	http://ec2-100-25-118-32.compute-1.amazonaws.com:5000/
+
+![aws](image/aws.png)
 
 Un [video](https://pruebacorreoescuelaingeduco.sharepoint.com/sites/me195/Shared%20Documents/General/Recordings/New%20channel%20meeting-20230331_152514-Meeting%20Recording.mp4?web=1) de muestra del funcionamiento.
 
