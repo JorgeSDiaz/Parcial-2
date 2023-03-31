@@ -5,9 +5,9 @@ import java.nio.file.Path;
 
 import static spark.Spark.*;
 
-import static org.myorg.service.HttpConnection.*;
+import static org.myorg.service.CollatzService.*;
 
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
@@ -15,7 +15,33 @@ public class App
         get("/", ((request, response) -> {
             response.type("text/html");
 
-            return Files.readAllBytes(Path.of("src/main/resources/static/index.html"));
+            return "<!DOCTYPE html>\n" +
+                    "<html>\n" +
+                    "<head>\n" +
+                    "    <title>Collatz Sequence</title>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "<h1>Collatz Sequence</h1>\n" +
+                    "<form action=\"/request\">\n" +
+                    "    <label for=\"value\">Number:</label><br>\n" +
+                    "    <input type=\"text\" id=\"value\" name=\"value\"><br><br>\n" +
+                    "    <input type=\"button\" value=\"Submit\" onclick=\"loadGetMsg()\">\n" +
+                    "</form>\n" +
+                    "<div id=\"getrespmsg\"></div>\n" +
+                    "<script>\n" +
+                    "            function loadGetMsg(){\n" +
+                    "                let value = document.getElementById(\"value\");\n" +
+                    "                let url = \"/request?value=\" + value.value;\n" +
+                    "\n" +
+                    "                fetch (url, {method: 'GET'})\n" +
+                    "                    .then(x => x.text())\n" +
+                    "                    .then(y => document.getElementById(\"getrespmsg\").innerHTML = y);\n" +
+                    "            }\n" +
+                    "</script>\n" +
+                    "</body>\n" +
+                    "</html>";
         }));
 
         get("/request", ((request, response) -> {
@@ -23,8 +49,7 @@ public class App
 
             String param = request.queryParams("value");
             System.out.println(param);
-            System.out.println(getUrlService() + ":" + String.valueOf(getPort()) + "/cz?value=" + param);
-            String res = connect(getUrlService() + "/cz?value=" + param);
+            String res = sequence(Integer.parseInt(param));
             System.out.println(res);
             return resFormat("collatzsequence", param, res);
         }));
@@ -43,9 +68,5 @@ public class App
 
     private static Integer getPort() {
         return System.getenv("PORT") != null ? Integer.parseInt(System.getenv("PORT")) : 7654;
-    }
-
-    private static String getUrlService() {
-        return System.getenv("URLSERVICE") != null ? System.getenv("URLSERVICE") : "http://localhost:4567";
     }
 }
