@@ -1,0 +1,4 @@
+org\myorg\service\CollatzService.class
+org\myorg\service\HttpConnection.class
+org\myorg\App.class
+org\myorg\CollatzApp.class

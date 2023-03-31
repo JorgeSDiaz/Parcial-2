@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Collatz Sequence</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<h1>Collatz Sequence</h1>
+<form action="/request">
+    <label for="value">Number:</label><br>
+    <input type="text" id="value" name="value"><br><br>
+    <input type="button" value="Submit" onclick="loadGetMsg()">
+</form>
+<div id="getrespmsg"></div>
+<script>
+            function loadGetMsg(){
+                let value = document.getElementById("value");
+                let url = "/request?value=" + value.value;
+
+                fetch (url, {method: 'GET'})
+                    .then(x => x.text())
+                    .then(y => document.getElementById("getrespmsg").innerHTML = y);
+            }
+</script>
+</body>
+</html>
